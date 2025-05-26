@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Calculator Pro México - La Herramienta #1 para Maximizar tus Inversiones</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .mexico-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #10b981, #059669);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .price-section {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        .current-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 15px;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: #1f2937;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #f9fafb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            color: #1f2937;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 80px 20px;
+            background: #1f2937;
+            color: white;
+        }
+
+        .problem h2 {
+            color: #ef4444;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .problem-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .problem-item::before {
+            content: '❌';
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .solution h2 {
+            color: #10b981;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .solution-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .solution-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .solution-item::before {
+            content: '✅';
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: #f3f4f6;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Bonus Section */
+        .bonus {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .bonus-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .bonus-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+
+        /* Guarantee */
+        .guarantee {
+            padding: 60px 20px;
+            background: #fef3c7;
+            text-align: center;
+        }
+
+        .guarantee-badge {
+            background: #f59e0b;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* CTA Final */
+        .cta-final {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+
+        .urgency {
+            background: rgba(239, 68, 68, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px auto;
+            max-width: 500px;
+            font-weight: 600;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 30px;
+            opacity: 0.8;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .payment-icon {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .current-price {
+                font-size: 2.5rem;
+            }
+            
+            .cta-button {
+                padding: 18px 30px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .mexico-flag {
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="mexico-badge">
+                🇲🇽 #1 en México 🇲🇽
+            </div>
+            
+            <h1>ROI Calculator Pro</h1>
+            <p class="subtitle">La Herramienta Más Poderosa para Maximizar tus Inversiones en Marketing Digital</p>
+            
+            <div class="price-section">
+                <div class="original-price">Valor Real: $4,500 MXN</div>
+                <div class="current-price">$899 MXN</div>
+                <div class="price-note">Precio de Lanzamiento México - Por Tiempo Limitado</div>
+                <a href="#comprar" class="cta-button">🚀 ¡Obtener Acceso Inmediato!</a>
+            </div>
+            
+            <div class="payment-methods">
+                <p>Pago 100% Seguro con Stripe México</p>
+                <div class="payment-icons">
+                    <span class="payment-icon">VISA</span>
+                    <span class="payment-icon">MasterCard</span>
+                    <span class="payment-icon">AMEX</span>
+                    <span class="payment-icon">Débito</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2>❌ ¿Te Suena Familiar?</h2>
+            <div class="problem-list">
+                <div class="problem-item">Inviertes $20,000 pesos en Facebook Ads sin saber si realmente funcionan</div>
+                <div class="problem-item">Tus clientes te preguntan "¿cuánto ganamos?" y no sabes qué responder</div>
+                <div class="problem-item">Usas Excel complicado que nunca entiendes completamente</div>
+                <div class="problem-item">Pierdes dinero en campañas porque no mides el ROI real</div>
+                <div class="problem-item">Tus reportes se ven amateur comparados con agencias grandes</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2>✅ Con ROI Calculator Pro:</h2>
+            <div class="solution-list">
+                <div class="solution-item">Calculas el ROI exacto de cualquier campaña en 60 segundos</div>
+                <div class="solution-item">Identificas qué inversiones te hacen rico y cuáles te arruinan</div>
+                <div class="solution-item">Generas reportes profesionales que impresionan a clientes</div>
+                <div class="solution-item">Optimizas presupuestos basándote en datos reales, no corazonadas</div>
+                <div class="solution-item">Te posicionas como experto con herramientas de nivel agencia</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">🚀 Lo Que Incluye Tu Compra</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Calculadora ROI Pro</h3>
+                    <p>Interfaz profesional que calcula ROI, ganancias, ratio de eficiencia y punto de equilibrio automáticamente.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Análisis Multicanal</h3>
+                    <p>Compatible con Facebook Ads, Google Ads, Instagram, Email Marketing y más plataformas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Reportes Profesionales</h3>
+                    <p>Genera reportes que impresionan a clientes y te posicionan como experto en ROI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bonus Section -->
+    <section class="bonus">
+        <div class="container">
+            <h2 class="section-title">🎁 Bonuses Exclusivos para México</h2>
+            
+            <div class="bonus-grid">
+                <div class="bonus-item">
+                    <div class="bonus-value">Valor: $1,200 MXN</div>
+                    <h3>📚 Guía "ROI Explosivo México"</h3>
+                    <p>10 estrategias probadas específicamente para el mercado mexicano</p>
+                </div>
+                
+                <div class="bonus-item">
+                    <div class="bonus-value">Valor: $800 MXN</div>
+                    <h3>📊 Pack Plantillas Excel</h3>
+                    <p>Dashboard profesional y tracking automatizado de campañas</p>
+                </div>
+                
+                <div class="bonus-item">
+                    <div class="bonus-value">Valor: $1,500 MXN</div>
+                    <h3>🎥 Masterclass Exclusiva</h3>
+                    <p>"Optimización de Campañas para Máximo ROI" - 90 minutos de contenido premium</p>
+                </div>
+                
+                <div class="bonus-item">
+                    <div class="bonus-value">Valor: $2,000 MXN</div>
+                    <h3>👨‍💼 Consulta Gratis</h3>
+                    <p>30 minutos de consultoría personalizada para optimizar tus campañas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">⭐ Lo Que Dicen Nuestros Clientes Mexicanos</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">"Esta calculadora me ayudó a descubrir que perdía $15,000 pesos mensuales en una campaña de Facebook Ads que creía exitosa. En 2 semanas optimicé todo y ahora tengo 180% de ROI."</div>
+                    <div class="testimonial-author">- María González, E-commerce CDMX</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">"Mis clientes ahora me ven como un experto. Los reportes que genero con esta herramienta son tan profesionales que subí mis precios 50% y todos aceptaron felices."</div>
+                    <div class="testimonial-author">- Carlos Ramírez, Freelancer Guadalajara</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">"Antes tardaba horas calculando ROI manualmente. Ahora lo hago en 1 minuto y tengo más tiempo para optimizar campañas. Mi agencia creció 300% este año."</div>
+                    <div class="testimonial-author">- Ana Martínez, Digital Agency Monterrey</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section class="guarantee">
+        <div class="container">
+            <div class="guarantee-badge">🛡️ Garantía 100% - 30 Días</div>
+            <h2>Sin Riesgo Total</h2>
+            <p>Si no ves mejoras en tu análisis de ROI en 30 días, te devolvemos cada peso. Sin preguntas.</p>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-final" id="comprar">
+        <div class="container">
+            <h2>🚀 ¡Obtén ROI Calculator Pro Ahora!</h2>
+            <p>Únete a cientos de marketers mexicanos que ya maximizan sus inversiones</p>
+            
+            <div class="urgency">
+                ⏰ OFERTA LIMITADA: El precio sube a $1,499 MXN en 7 días
+            </div>
+            
+            <div class="price-section">
+                <div class="original-price">Valor Total: $6,500 MXN</div>
+                <div class="current-price">$899 MXN</div>
+                <div class="price-note">Descarga Inmediata + Todos los Bonuses</div>
+                
+                <!-- Aquí irá tu botón de Stripe -->
+                <button id="stripe-button" class="cta-button">
+                    💳 Comprar Ahora - $899 MXN
+                </button>
+            </div>
+            
+            <div class="payment-methods">
+                <p>✅ Pago 100% Seguro con Stripe México</p>
+                <p>✅ Descarga Inmediata ✅ Garantía 30 Días ✅ Soporte en Español</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Configuración de Stripe - Reemplaza con tu clave pública
+        const stripe = Stripe('pk_test_AQUI_VA_TU_CLAVE_PUBLICA_DE_STRIPE');
+        
+        document.getElementById('stripe-button').addEventListener('click', async () => {
+            // Redirige a tu Payment Link de Stripe
+            window.open('https://buy.stripe.com/test_8x2fZj0r604HeE35y63cc00', '_blank');
+        });
+
+        // Scroll suave a la sección de compra
+        document.querySelectorAll('a[href="#comprar"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('comprar').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+        });
+
+        // Animaciones de entrada
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .testimonial, .bonus-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
