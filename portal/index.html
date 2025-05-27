@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Miembros - ROI Calculator Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .welcome-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .download-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .download-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .download-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .download-card p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .download-button {
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: #059669;
+            transform: translateX(5px);
+        }
+
+        .bonus-section {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            color: #1f2937;
+        }
+
+        .bonus-section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .bonus-item {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .bonus-item h4 {
+            margin-bottom: 10px;
+            color: #92400e;
+        }
+
+        .instructions {
+            background: #e0e7ff;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .instructions h3 {
+            color: #4338ca;
+            margin-bottom: 20px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #4338ca;
+        }
+
+        .support-section {
+            background: #1f2937;
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .support-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .support-button {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .support-button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c00;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .support-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Portal de Miembros</h1>
+        <p>ROI Calculator Pro - Acceso Exclusivo</p>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Verificando acceso...</p>
+    </div>
+
+    <div class="error-message" id="error">
+        Acceso no autorizado. Por favor, verifica tu email de compra.
+    </div>
+
+    <div class="container" id="content" style="display: none;">
+        <div class="welcome-section">
+            <h2>¡Bienvenido a ROI Calculator Pro! 🎉</h2>
+            <p>Aquí encontrarás todos tus materiales y bonuses exclusivos. Guarda esta página en favoritos para acceso rápido.</p>
+        </div>
+
+        <div class="instructions">
+            <h3>🚀 Guía de Inicio Rápido</h3>
+            <ol>
+                <li><strong>Descarga la Calculadora ROI:</strong> Es tu herramienta principal. Instálala siguiendo las instrucciones incluidas.</li>
+                <li><strong>Lee la Guía "ROI Explosivo":</strong> Contiene las 10 estrategias más efectivas para el mercado mexicano.</li>
+                <li><strong>Instala los Dashboards:</strong> Úsalos para trackear todas tus campañas profesionalmente.</li>
+                <li><strong>Revisa las Plantillas de Email:</strong> Te ayudarán a comunicarte profesionalmente con tus clientes.</li>
+                <li><strong>Agenda tu Consultoría Gratis:</strong> 30 minutos conmigo para optimizar tus campañas.</li>
+            </ol>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 40px;">📦 Tus Descargas</h2>
+
+        <div class="downloads-grid">
+            <div class="download-card">
+                <div class="download-icon">📊</div>
+                <h3>ROI Calculator Pro</h3>
+                <p>La calculadora profesional completa con todas las funciones premium desbloqueadas.</p>
+                <a href="#" class="download-button" onclick="downloadFile('calculator')">
+                    <span>⬇️</span> Descargar (2.5 MB)
+                </a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">📚</div>
+                <h3>Guía ROI Explosivo México</h3>
+                <p>15 páginas con las 10 estrategias probadas para multiplicar tu ROI en el mercado mexicano.</p>
+                <a href="#" class="download-button" onclick="downloadFile('guide')">
+                    <span>⬇️</span> Descargar PDF (4.2 MB)
+                </a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">📈</div>
+                <h3>Pack Dashboards Excel</h3>
+                <p>3 plantillas profesionales para tracking de performance, presupuesto y análisis multi-canal.</p>
+                <a href="#" class="download-button" onclick="downloadFile('dashboards')">
+                    <span>⬇️</span> Descargar Pack (1.8 MB)
+                </a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">🎓</div>
+                <h3>Masterclass Script</h3>
+                <p>Script completo de 90 minutos + slides para tu propia masterclass de ROI.</p>
+                <a href="#" class="download-button" onclick="downloadFile('masterclass')">
+                    <span>⬇️</span> Descargar (3.1 MB)
+                </a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">📧</div>
+                <h3>Plantillas de Email</h3>
+                <p>6 plantillas profesionales para reportes de clientes + bonus WhatsApp.</p>
+                <a href="#" class="download-button" onclick="downloadFile('emails')">
+                    <span>⬇️</span> Descargar (0.8 MB)
+                </a>
+            </div>
+
+            <div class="download-card">
+                <div class="download-icon">🎬</div>
+                <h3>Video Tutoriales</h3>
+                <p>3 horas de contenido paso a paso para dominar todas las herramientas.</p>
+                <a href="#" class="download-button" onclick="downloadFile('videos')">
+                    <span>⬇️</span> Ver Videos
+                </a>
+            </div>
+        </div>
+
+        <div class="bonus-section">
+            <h2>🎁 Tus Bonuses Exclusivos</h2>
+            <div class="bonus-grid">
+                <div class="bonus-item">
+                    <h4>📞 Consultoría 1-1</h4>
+                    <p>30 minutos de asesoría personalizada</p>
+                    <a href="https://calendly.com/roicalculator/consultoria" target="_blank" style="color: #92400e;">Agendar Ahora</a>
+                </div>
+                <div class="bonus-item">
+                    <h4>📧 Soporte Premium</h4>
+                    <p>Respuesta prioritaria por email</p>
+                    <a href="mailto:soporte@roicalculatorpro.com" style="color: #92400e;">Contactar</a>
+                </div>
+                <div class="bonus-item">
+                    <h4>🔄 Actualizaciones</h4>
+                    <p>Acceso de por vida a todas las actualizaciones</p>
+                    <span style="color: #22c55e;">✓ Activo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="support-section">
+            <h3>¿Necesitas Ayuda?</h3>
+            <p>Estamos aquí para asegurarnos de que obtengas el máximo valor de tu inversión</p>
+            <div class="support-buttons">
+                <a href="mailto:soporte@roicalculatorpro.com" class="support-button">
+                    📧 Email de Soporte
+                </a>
+                <a href="https://roicalculatorpro.com/faq" class="support-button">
+                    ❓ Preguntas Frecuentes
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar acceso (versión simple sin localStorage)
+        function verifyAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                
+                // Simple verificación por token en URL
+                if (token && token.length > 10) {
+                    document.getElementById('content').style.display = 'block';
+                } else {
+                    document.getElementById('error').style.display = 'block';
+                }
+            }, 1500);
+        }
+
+        // Función para descargar archivos
+        function downloadFile(type) {
+            // En producción, estos serían links a archivos reales
+            const files = {
+                calculator: 'https://drive.google.com/your-file-id',
+                guide: 'https://drive.google.com/your-file-id',
+                dashboards: 'https://drive.google.com/your-file-id',
+                masterclass: 'https://drive.google.com/your-file-id',
+                emails: 'https://drive.google.com/your-file-id',
+                videos: 'https://vimeo.com/showcase/your-videos'
+            };
+            
+            // Por ahora, solo mostrar alerta
+            alert(`Descarga de ${type} iniciada. En producción, aquí se descargaría el archivo real.`);
+            
+            // En producción:
+            // window.open(files[type], '_blank');
+        }
+
+        // Verificar acceso al cargar
+        window.onload = verifyAccess;
+    </script>
+</body>
+</html>
