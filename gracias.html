@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por tu compra! - ROI Calculator Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 40px;
+            color: white;
+            animation: scaleIn 0.5s ease 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .congrats {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .message {
+            color: #6b7280;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .email-notice {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .email-notice h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .email-notice p {
+            color: #78350f;
+            font-size: 1rem;
+        }
+
+        .steps {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .steps h3 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            color: #4b5563;
+            font-size: 1rem;
+        }
+
+        .cta-section {
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .support {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .support p {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .support a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .congrats {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        
+        <h1>¡Felicidades!</h1>
+        <p class="congrats">Tu compra ha sido procesada exitosamente</p>
+        
+        <div class="message">
+            <p>Bienvenido a ROI Calculator Pro. Estás a punto de transformar la manera en que mides y optimizas tus inversiones en marketing digital.</p>
+        </div>
+
+        <div class="email-notice">
+            <h3>📧 Revisa tu correo electrónico</h3>
+            <p>En los próximos 5 minutos recibirás un email con:</p>
+            <ul style="text-align: left; margin-top: 10px; padding-left: 20px;">
+                <li>Acceso a tu portal de descargas</li>
+                <li>Tu licencia personal</li>
+                <li>Instrucciones de inicio rápido</li>
+            </ul>
+        </div>
+
+        <div class="steps">
+            <h3>🚀 Próximos Pasos</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">Revisa tu bandeja de entrada (y carpeta de spam)</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">Haz clic en el link de acceso en el email</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">Descarga todos tus materiales y bonuses</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">Comienza a calcular tu ROI como un profesional</div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <a href="mailto:soporte@roicalculatorpro.com" class="cta-button">
+                📧 Contactar Soporte
+            </a>
+            <p style="color: #6b7280; font-size: 0.9rem;">
+                Respuesta en menos de 24 horas
+            </p>
+        </div>
+
+        <div class="support">
+            <p>¿No recibiste el email?</p>
+            <p><a href="mailto:soporte@roicalculatorpro.com">soporte@roicalculatorpro.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
